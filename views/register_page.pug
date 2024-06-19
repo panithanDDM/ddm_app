@@ -1,0 +1,63 @@
+extends layout
+
+block content
+
+    main 
+        div(class='container')
+
+            section(class='section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4')
+                div(class='container')
+                    div(class='row justify-content-center')
+                        div(class='col-lg-6 col-md-8 d-flex flex-column align-items-center justify-content-center')
+
+                            div(class='d-flex justify-content-center py-4')
+                                a(href="#" class='logo d-flex align-items-center w-auto') 
+                                    img(src="/images/01_page_images/ddm_logo.png", alt="")
+                                    span(class='d-none d-lg-block') DevDroneMapper
+
+                            div(class='card mb-3')
+                                div(class='card-body')
+                                    div(class='pt-4 pb-3')
+                                        h5(class='card-title text-center pb-0 fs-4') Create an Account
+                                        p(class='text-center small prompt-light') Enter your personal details to create account
+                                        
+                                        if flash.error
+                                            p(class="text-center flash-error prompt-regular")= flash.error
+
+                                    form(action='/register/' method='POST' class='row g-3 needs-validation' novalidate)
+                                        div(class='col-12')
+                                            label(class='form-label' for="fullname") Full name
+                                            input(name='fullname' type="text" class='form-control' id='fullname' required)
+                                            div(class='invalid-feedback') Please, enter Full name
+                                        
+                                        div(class='col-12')
+                                            label(class='form-label' for='userName') Username
+                                            div(class='input-group has-validation')
+                                                span(class='input-group-text' id='inputGroupPrepend') @
+                                                input(name="username" type="text" class='form-control' id='username' required)
+                                                div(class='invalid-feedback') Please, enter Username
+
+                                        div(class='col-12')
+                                            label(class="form-label" for="password") Password
+                                            input(name="password" type="password" class="form-control" id="password" required)
+                                            div(class="invalid-feedback") Please, enter password
+
+                                        div(class='col-12')
+                                            label(class="form-label" for="password") Confirm Password
+                                            input(name="confirmPassword" type="password" class="form-control" id="confirmPassword" required)
+                                            div(class="invalid-feedback") Please, enter Confirm assword
+                                        
+                                        div(class="col-12")
+                                            label(class="form-label" for="status") Status
+                                            select(name="status" class="form-select" disabled)
+                                                option(value="user") User
+                                                option(value="admin") Admin                                         
+
+
+                                        div(class="col-6 d-grid gap-2 mt-5 px-5")
+                                            button(type="submit" class="btn btn-primary") Register
+                                        div(class="col-6 mt-5 px-5")
+                                            a(href="/")
+                                                div(class="col-12 d-grid gap-2")
+                                                    button(type="button" class="btn btn-outline-secondary") Back
+                                                    

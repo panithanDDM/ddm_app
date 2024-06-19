@@ -1,0 +1,95 @@
+extends ../layout
+
+block content
+    include ../utilities/03_navbar
+    include ../utilities/02_sidebar_operator
+
+    main(id="main" class="main")
+        div(class="pagetitle")
+            h1 Survey |
+
+        section(class="section dashboard")
+            div(class="row")
+                //- left side columns
+                div(class="col-lg-4")
+                    //- Buttom for add survey
+                    div(class="col-12 pb-4")
+                        a(href="/survey/form") 
+                            div(class="d-grid gap-2 mt-3")
+                                button(class="btn btn-outline-primary" type="button") 
+                                    i(class="bi bi-cart")   + Add Survey 
+
+                    //- Totlo Flight
+                    div(class="card sales-card")
+                        div(class="card-body")
+                            h5(class="card-title") Total Flight
+                            div(class="d-flex align-items-center")
+                                div(class="card-icon rounded-circle d-flex align-items-center justify-content-center")
+                                    i(class="bi bi-cart")
+                                div(class="ps-3")
+                                    h4(class="prompt-regular")= totalFlight.toLocaleString()
+                    //- Map
+                    div(class="card sales-card")
+                        div(class="card-body")
+                            h5(class="card-title") Map
+                            div(class="" id="map")
+                    
+
+
+                    
+                //- right side columns
+                div(class="col-lg-8")
+                    div(class="col-12")
+                        div(class="card")
+                            div(class="card-body")
+                                h5(class="card-title") Survey List 
+                                    span | Data Table 
+                            table(class="table table-borderless datatable")
+                                thead 
+                                    tr 
+                                        th(scope='col' class="prompt-regular") ID
+                                        th(scope='col' class="prompt-regular") Project                                        
+                                        th(scope='col' class="prompt-regular") Date
+                                        th(scope='col' class="prompt-regular") Name
+                                tbody 
+                                    each item, index in surveyData
+                                        tr
+                                            th(class="prompt-regular")
+                                                a(href=`/survey/${item.id}`)= index + 1 
+                                            td(class="prompt-regular")
+                                                a(href=`/survey/${item.id}`)= item.project_name                                            
+                                            td(class="prompt-regular")= item.date.toLocaleDateString('TH-th')
+                                            td(class="prompt-regular")= item.pilot_name
+                                                
+
+
+
+    script.
+        var map = L.map('map', {
+            center: [13.310592, 100.939458],
+            zoom: 5
+        });
+        var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        }).addTo(map);
+
+        // Get the survey locations from the server-side variable
+        var surveyData = !{JSON.stringify(surveyData)};
+
+        // Add markers to the map
+        surveyData.forEach(function(location) {
+            if (location.latitude && location.longitude) {
+                var circle = L.circleMarker([location.latitude, location.longitude], { radius: 5, weight: 0.5 }).addTo(map);
+
+                // Create popup content
+                var popupContent = `
+                    <b>Survey Information</b><br>
+                    <b>Project:</b> ${location.project_name}<br>
+                    <b>Name:</b> ${location.pilot_name}
+                `;
+
+                // Bind popup to circle marker
+                circle.bindPopup(popupContent);
+                 
+            }
+        });

@@ -1,0 +1,172 @@
+extends ../layout
+
+block content
+    include ../utilities/03_navbar
+    include ../utilities/02_sidebar_operator
+
+    main(id="main" class="main")
+        div(class="pagetitle")
+            h1= `Inventory Detail | ${detailInventory.name}`
+            -const day = detailInventory.date.getDate()
+            -const month = detailInventory.date.getMonth() + 1
+            -const year = detailInventory.date.getFullYear()
+            -const formattedMonth = String(month).padStart(2, '0')
+            -const formattedDay = String(day).padStart(2, '0')
+            -const formattedDate = `${year}-${formattedMonth}-${formattedDay}` 
+        
+        section(class="section profile")
+            div(class="row")
+
+                div(class="col-xl-4")
+                    div(class="card")
+                        div(class="card-body pt-4 d-flex flex-column align-items-center")
+                            - var badgeClass = '';
+                            - if (detailInventory.status === 'Active') {
+                                - badgeClass = 'bg-success';
+                            - } else if (detailInventory.status === 'Pending') {
+                                - badgeClass = 'bg-warning';
+                            - } else if (detailInventory.status === 'Damaged') {
+                                - badgeClass = 'bg-danger';
+                            - }
+
+                            img(src=`/images/02_inventory_upload/${detailInventory.image}` class="rounded-2 w-100" alt="inventory")
+                            div(class="mt-3 d-flex flex-column align-items-center")
+                                p= detailInventory.name
+                                p= detailInventory.snumber
+                                div.col-lg-9.col-md-8.badge(class=badgeClass)= detailInventory.status
+
+
+
+                div(class="col-xl-8")
+                    div(class="card")
+                        div(class="card-body pt-3")
+
+                            ul(class="nav nav-tabs nav-tabs-bordered")
+                                li(class="nav-item")
+                                    button(class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview") 
+                                        | Overview
+                                li(class="nav-item")
+                                    button(class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit") 
+                                        | Edit Inventory
+
+                            div(class="tab-content pt-2")
+
+                                div(class="tab-pane fade show active profile-overview" id="profile-overview")
+                                    h5(class="card-title")= `Inventory Detail | ${detailInventory.name}`
+
+                                    div(class="row")
+                                        div(class="col-lg-3 col-md-4 label") 
+                                            h6 Equiment Name
+                                        div(class="col-lg-9 col-md-8")= detailInventory.name
+
+                                    div(class="row mt-3")
+                                        div(class="col-lg-3 col-md-4 label") 
+                                            h6 Equiment Model
+                                        div(class="col-lg-9 col-md-8")= detailInventory.model
+
+                                    div(class="row mt-3")
+                                        div(class="col-lg-3 col-md-4 label") 
+                                            h6 Serial number
+                                        div(class="col-lg-9 col-md-8")= detailInventory.snumber
+
+                                    div(class="row mt-3")
+                                        div(class="col-lg-3 col-md-4 label") 
+                                            h6 Type
+                                        div(class="col-lg-9 col-md-8")= detailInventory.type
+                                    
+                                    div(class="row mt-3")
+                                        div(class="col-lg-3 col-md-4 label") 
+                                            h6 Activated Date
+                                        div(class="col-lg-9 col-md-8")= day + "-" + formattedMonth + "-" +  year
+                                    
+                                    div(class="row mt-3")
+                                        div(class="col-lg-3 col-md-4 label") 
+                                            h6 Used Date
+                                        div(class="col-lg-9 col-md-8")= daysPassed.toLocaleString() + " Days"
+
+                                    if (detailInventory.usecycle != null)
+                                        div(class="row mt-3")
+                                            div(class="col-lg-3 col-md-4 label") 
+                                                h6 Cycle Use
+                                            div(class="col-lg-9 col-md-8")= `${detailInventory.usecycle} Times`
+                                
+
+
+                                //- Form Edit Inventory
+                                div(class="tab-pane fade profile-edit" id="profile-edit")
+                                    h5(class="card-title") Update Inventory Detail
+
+                                    if flash.error 
+                                        p(class="flash-error")= flash.error
+
+                                    form(action=`/inventory/${detailInventory.id}/` method="POST" class="row needs-validation" novalidate)
+                                                                         
+                                        div(class="row")
+                                            div(class="col-lg-3 col-md-4") 
+                                                label(for="name" Class="form-label") Equiment Name 
+                                            div(class="col-lg-9 col-md-8")
+                                                input(name="name" type="text" value=`${detailInventory.name}` class="form-control" required)
+
+                                        div(class="row mt-3")
+                                            div(class="col-lg-3 col-md-4") 
+                                                label(for="name" Class="form-label") Equiment Model
+                                            div(class="col-lg-9 col-md-8")
+                                                input(name="model" type="text" value=`${detailInventory.model}` class="form-control" required)
+
+                                        div(class="row mt-3")
+                                            div(class="col-lg-3 col-md-4") 
+                                                label(for="name" Class="form-label") Serial number
+                                            div(class="col-lg-9 col-md-8")
+                                                input(name="snumber" type="text" value=`${detailInventory.snumber}` class="form-control" required)
+
+                                        div(class="row mt-3")
+                                            div(class="col-lg-3 col-md-4") 
+                                                label(for="name" Class="form-label") Used Cycle
+                                            div(class="col-lg-9 col-md-8")
+                                                input(name="usecycle" type="text" value=`${detailInventory.usecycle}` class="form-control" required)
+
+                                        div(class="row mt-3")
+                                            div(class="col-lg-3 col-md-4") 
+                                                label(for="name" Class="form-label") Type
+                                            div(class="col-lg-9 col-md-8")
+                                                select(name="type" class="form-select" aria-label="Default select example" required)   
+                                                    option(value="Drone" selected=detailInventory.type==="Drone") Drone 
+                                                    option(value="Battery" selected=detailInventory.type==="Battery") Battery 
+                                                    option(value="Sensor" selected=detailInventory.type==="Sensor") Sensor
+                                                    option(value="Camera" selected=detailInventory.type==="Camera") Camera
+                                                    option(value="Charger" selected=detailInventory.type==="Charger") Charger
+                                                    option(value="Accessory" selected=detailInventory.type==="Accessory") Accessory
+                                                    option(value="Orther" selected=detailInventory.type==="Orther") Other
+                                        
+                                        div(class="row mt-3")
+                                            div(class="col-lg-3 col-md-4") 
+                                                label(for="name" Class="form-label") Status
+                                            div(class="col-lg-9 col-md-8")
+                                                select(name="status" class="form-select" aria-label="Default select example" required)
+                                                    option(value="Active" selected=detailInventory.status==="Active") Active
+                                                    option(value="Pending" selected=detailInventory.status==="Pending") Pending
+                                                    option(value="Damaged" selected=detailInventory.status==="Damaged") Damaged
+
+                                        div(class="row mt-3")
+                                            div(class="col-lg-3 col-md-4") 
+                                                label(for="name" Class="form-label") Date
+                                            div(class="col-lg-9 col-md-8")     
+                                                input(name="date" type="date" class="form-control" value=`${formattedDate}` required)
+
+                                        div(class="row mt-3")
+                                            div(class="mt-4 col-lg-3 mx-auto")          
+                                                button(type="submit" class="btn btn-primary") Update Data
+                                            div(class="mt-4 col-lg-2 mx-auto")
+                                                button(type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#basicModal") DELETE
+                                
+                                    //-Model Popup
+                                    div(class="modal fade" id="basicModal" tabindex="-1")
+                                        div(class="modal-dialog")
+                                            div(class="modal-content")
+                                                div(class="modal-header")
+                                                    h5(class="modal-title") Delete Data
+                                                    button(type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close")
+                                                div(class="modal-body")
+                                                    p(class="flash-error") Comfirm to delete Inventory !
+                                                    form(action=`/inventory/${detailInventory.id}/delete` method='POST')
+                                                        button(type='submit' class="btn btn-danger") Delete

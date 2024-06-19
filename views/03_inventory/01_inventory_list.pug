@@ -1,0 +1,167 @@
+extends ../layout
+
+block content
+    include ../utilities/03_navbar
+    include ../utilities/02_sidebar_operator
+
+    main(id="main" class="main")
+        div(class="pagetitle")
+            h1 Inventory |
+
+        section(class="section dashboard")
+            div(class="row pt-4")
+                //- left side columns
+                div(class="col-lg-8")
+                    div(class="row")
+
+                        //- All Equioment Card 
+                        div(class="col-lg-4 col-12")
+                            div(class="card info-card sales-card")
+                                div(class="card-body")
+                                    h5(class="card-title") All | 
+                                        span Equipment
+                                    div(class="d-flex align-items-center")
+                                        div(class="card-icon rounded-circle d-flex align-items-center justify-content-center")
+                                            i(class="bi bi-cart")
+                                        div(class="ps-3")
+                                            h4(class="prompt-regular")= totalItem.toLocaleString()
+                        //- Active Equipment
+                        div(class="col-lg-4 col-6")
+                             div(class="card info-card revenue-card")
+                                div(class="card-body")
+                                    h5(class="card-title") Active | 
+                                    div(class="d-flex align-items-center")
+                                        div(class="card-icon rounded-circle d-flex align-items-center justify-content-center")
+                                            i(class="ri ri-emotion-line")
+                                        div(class="ps-3")
+                                            h4(class="prompt-regular")= totalItemActive.toLocaleString()
+                        //- Damage Equipment
+                        div(class="col-lg-4 col-6")
+                             div(class="card info-card customers-card")
+                                div(class="card-body")
+                                    h5(class="card-title") Damage | 
+                                    div(class="d-flex align-items-center")
+                                        div(class="card-icon rounded-circle d-flex align-items-center justify-content-center")
+                                            i(class="ri ri-emotion-sad-line")
+                                        div(class="ps-3")
+                                            h4(class="prompt-regular")= totalItemDamaged.toLocaleString()
+                    
+                    //- Table Data for Show All
+                    div(class="row")
+                        div(class="col-12")
+                            div(class="card recent-sales overflow-auto")
+                                div(class="card-body")
+                                    h5(class="card-title") Inventory 
+                                        span | Data Table 
+                                table(class="table table-borderless datatable")
+                                    thead 
+                                        tr 
+                                            th(scope='col' class="prompt-regular") ID
+                                            th(scope='col' class="prompt-regular") Name
+                                            th(scope='col' class="prompt-regular") Model
+                                            th(scope='col' class="prompt-regular") Used date
+                                            th(scope='col' class="prompt-regular") Status
+                                    tbody 
+                                        each item, index in data
+                                            - var badgeClass = '';
+                                            - if (item.status === 'Active') {
+                                                - badgeClass = 'bg-success';
+                                            - } else if (item.status === 'Pending') {
+                                                - badgeClass = 'bg-warning';
+                                            - } else if (item.status === 'Damaged') {
+                                                - badgeClass = 'bg-danger';
+                                            - }
+                                            tr 
+                                                th(scope='row')
+                                                    a(href=`/inventory/${item.id}`)= index + 1 
+                                                td 
+                                                    a(href=`/inventory/${item.id}` class="text-primary")= item.name
+                                                td= item.model
+                                                td= item.daysPassed.toLocaleString() + ' ' + 'Days'
+                                                td
+                                                    span.badge(class=badgeClass)= item.status
+
+                //- right side columns
+                div(class="col-lg-4")
+                    div(class="row")
+                        div(class="col-12")
+                            a(href="/inventory/form") 
+                                div(class="d-grid gap-2 mt-3")
+                                    button(class="btn btn-outline-primary" type="button") 
+                                        i(class="bi bi-cart")   + Add Inventory
+                        
+                    
+                    //- Chart for show inventory status
+                    div(class="row mt-4")
+                        div(class="col-12")
+                            div(class="card")
+                                div(class="card-body pb-0")
+                                    h5(class="card-title") Equipment Status 
+                                    div(id="trafficChart" class="echart" style='min-height: 400px;')
+                                    script.
+                                        document.addEventListener("DOMContentLoaded", () => {
+                                        const totalCount =#{totalItem}
+                                        const activeCount = #{totalItemActive}
+                                        const damageCount = #{totalItemDamaged}
+                                        const pendingCount = #{totalItemPending}
+
+                                        echarts.init(document.querySelector("#trafficChart")).setOption({
+                                            tooltip: {
+                                                trigger: 'item'
+                                            },
+                                            legend: {
+                                                top: '5%',
+                                                left: 'center'
+                                            },
+                                            series: [{
+                                                name: 'Equipment',
+                                                type: 'pie',
+                                                radius: ['40%', '70%'],
+                                                avoidLabelOverlap: false,
+                                                label: {
+                                                    show: false,
+                                                    position: 'center'
+                                                },
+                                                emphasis: {
+                                                    label: {
+                                                        show: true,
+                                                        fontSize: '18',
+                                                        fontWeight: 'bold'
+                                                    }
+                                                },
+                                                labelLine: {
+                                                    show: false
+                                                },
+                                                data: [
+                                                    {
+                                                        value: activeCount,
+                                                        name: 'Active',
+                                                        itemStyle:{
+                                                            color:'#55a630'
+                                                        }
+                                                    },
+                                                    {
+                                                        value: damageCount,
+                                                        name: 'Damage',
+                                                        itemStyle:{
+                                                            color:'#e74c3c'
+                                                        }
+                                                    },
+                                                    {
+                                                        value: pendingCount,
+                                                        name: 'Pending',
+                                                        itemStyle: {
+                                                            color: '#f39c12' // เปลี่ยนสีของข้อมูล Pending ได้ที่นี่
+                                                        }
+                                                    }
+                                                ]
+                                            }]
+                                        });
+                                        });
+                //- Chart for show inventory status
+            
+            //- column buttom for show map 
+            div(class="row pt-4")
+                div(class="col-12")
+                    
+                                        

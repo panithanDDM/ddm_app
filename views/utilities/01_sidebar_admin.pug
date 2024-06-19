@@ -1,0 +1,75 @@
+//- ======= Sidebar =======
+aside(id="sidebar" class="sidebar")
+    ul(id="sidebar-nav" class="sidebar-nav")
+        li(class="nav-item")
+        a(href="/admin/" class="nav-link collapsed")
+            i(class="ri-home-6-fill")
+            span(class="prompt-regular") หน้าแรก
+
+        li(class="nav-heading prompt-light") พื้นที่ในการดูแลของกองทัพเรือ
+        li(class="nav-item")
+        //สำหรับการแสดงแผนที่ในพื้นที่ฐานทัพกรุงเทพ
+        a(href="#" class="nav-link collapsed" data-bs-target="#map-area-bkk" data-bs-toggle="collapse")
+            i(class="bx bxs-map-alt")
+            span(class="prompt-light") หน่วยงานเจ้าของพื้นที่
+            i(class="bi bi-chevron-down ms-auto")
+        ul(id="map-area-bkk" class="nav-content collapse" data-bs-parent="#sidebar-nav")
+            li
+            a(href='#')
+                i.bi.bi-circle
+                span(class="prompt-light") กรมที่ดิน
+            li
+            a(href='/inventory/form/')
+                i.bi.bi-circle
+                span(class="prompt-light") กระทรวงมหาดไทย
+            li
+            a(href='/inventory/form/')
+                i.bi.bi-circle
+                span(class="prompt-light") กรมป่าไม้
+            li
+            a(href='/inventory/form/')
+                i.bi.bi-circle
+                span(class="prompt-light") กรมอุทยาน
+            li
+            a(href='/inventory/form/')
+                i.bi.bi-circle
+                span(class="prompt-light") กรมธนารักษ์
+            li
+            a(href='/inventory/form/')
+                i.bi.bi-circle
+                span(class="prompt-light") สำนักงานทรัพย์สินพระมหากษัตริย์
+
+        //- สำหรับการแสดงแผนที่การบุกรุกที่ดิน
+        a(href="#" class="nav-link collapsed" data-bs-target="#map-invade-bkk" data-bs-toggle="collapse")
+            i(class="bx bx-x-circle")
+            span(class="prompt-light") การบุกรุกที่ดิน
+            i(class="bi bi-chevron-down ms-auto")
+        ul(id="map-invade-bkk" class="nav-content collapse" data-bs-parent="#sidebar-nav")
+            li
+            a(href='#')
+                i.bi.bi-circle
+                span(class="prompt-light") ตำแหน่งการบุกรุกที่ดิน
+            li
+            a(href='/inventory/form/')
+                i.bi.bi-circle
+                span(class="prompt-light") รายงานตามวงรอบ
+
+
+        li(class="nav-heading prompt-light") อาคารและสถานที่
+        li(class="nav-item")
+        //สำหรับการแสดงแผนที่ในพื้นที่ฐานทัพกรุงเทพ
+        a(href="#" class="nav-link collapsed" data-bs-target="#map-area-east" data-bs-toggle="collapse")
+            i(class="bx bxs-map-alt")
+            span(class="prompt-light") ข้อมูลอาคารและสถานที่
+            i(class="bi bi-chevron-down ms-auto")
+        ul(id="map-area-east" class="nav-content collapse" data-bs-parent="#sidebar-nav")
+            li
+            a(href='#')
+                i.bi.bi-circle
+                span(class="prompt-light") รายละเอียดข้อมูลอาคาร
+
+        
+
+
+        
+

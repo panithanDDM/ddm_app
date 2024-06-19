@@ -1,0 +1,89 @@
+extends ../layout
+
+block content
+    include ../utilities/03_navbar
+    include ../utilities/02_sidebar_operator
+
+    main(id="main" class="main")
+        div(class="pagetitle")
+            h1 Financial Form |
+        
+        section(class="section")
+            div(class="row mt-3")
+                div(class="col-md-8 mx-auto")
+                    div(class="card")
+                        div(class="card-body")
+                            h5(class="card-title text-center") Form
+                        
+                            form(action="/finance/form/" method="POST" enctype="multipart/form-data" class="row g-3 needs-validation" novalidate)
+                                div(class="col-md-12")
+                                    label(for="name" class="form-label") Name
+                                    input(name="name" type="text" class="form-control" value=`${user.fullname}` readonly) 
+                                div(class="col-md-6")
+                                    label(for="date" class="form-label") Date
+                                    input(name="date" type="date" class="form-control" id="dateInput" required)
+                                    div(class="invalid-feedback") 
+                                        p Please provide date
+                                div(class="col-md-6")
+                                    label(for="section" class="form-label") Section
+                                    select(name="section" class="form-select" aria-label="Default select example") 
+                                        option(value="แผนกการกเงิน") แผนกการเงิน
+                                        option(value="แผนกเทคนิค") แผนกเทคนิค
+                                        option(value="อื่นๆ") อื่นๆ
+                                div(class="col-md-6")
+                                    label(for="type" class="form-label") Type
+                                    select(name="type" class="form-control" aria-label="Default select example") 
+                                        option(value="เบิกเงินค่าดำเนินงาน") เบิกเงินค่าดำเนินงาน
+                                        option(value="ค่าอุปกรณ์") ค่าอุปกรณ์
+                                        option(value="เบิกเงินสวัสดิการออฟฟิศ") เบิกเงินสวัสดิการออฟฟิศ
+                                        option(value="เบิกเงินค่าพัสดุ") เบิกเงินค่าพัสดุ
+                                        option(value="ค่าเดินทาง") ค่าเดินทาง
+                                        option(value="อื่นๆ") อื่นๆ
+                                div(class="col-md-6")
+                                    label(for="project_name" class="form-label") Project
+                                    select(name="project_name" class="form-select" aria-label="Default select example") 
+                                        each item in project
+                                            option(value=`${item.project_name}`)= item.project_name 
+                                div(class="col-md-6")
+                                    label(for="price" class="form-label") Price
+                                    input(name="price" type="text" class="form-control" id="priceInput" required)
+                                    div(class="invalid-feedback") 
+                                        p Please provide price.
+                                div(class="col-md-6")
+                                    label(for="image" class="form-label") Image
+                                    input(name="image" type="file" class="form-control" capture="user" accept="image/*" required)
+                                    div(class="invalid-feedback") 
+                                        p Please provide Image.
+                                div(class="col-md-12")
+                                    label(for="description" class="form-label") Description
+                                    textarea(name="description" class="form-control" required)
+                                    div(class="invalid-feedback") 
+                                        p Please provide description.
+                                    h5(class="card-title")
+                                        span(class="") *กรุณานำเอกสารใบกำกับภาษีฉบับจริงส่งที่ฝ่ายการเงิน
+                                div(class="col-md-12")
+                                    div(class="col-lg-12 col-sm-12 d-flex justify-content-center align-items-center pt-sm-5")
+                                        button(type="button" class="btn btn-success mx-4" data-bs-toggle="modal" data-bs-target="#basicModal") Sent Request
+                                        button(type='reset' class="btn btn-secondary mx-4") Reset
+                                div(class="modal fade" id="basicModal" tabindex="-1")        
+                                    div(class="modal-dialog")
+                                        div(class="modal-content")
+                                            div(class="modal-header")
+                                                h5(class="modal-title") Confirm for sent request
+                                                button(type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close")
+                                            div(class="modal-body")
+                                                button(type='submit' class="btn btn-success") Confirm
+            //- Modal for Loading 
+    script.
+      document.getElementById('priceInput').addEventListener('input', function (e) {
+        let value = e.target.value.replace(/,/g, '');
+        if (!isNaN(value) && value !== '') {
+          // Convert to number and format with commas
+          let formattedValue = Number(value).toLocaleString();
+          e.target.value = formattedValue;
+        }
+      });
+    //- Date to day for form
+
+                    
+                                        

@@ -1,0 +1,43 @@
+
+header(id="header" class="header fixed-top d-flex align-items-center")
+
+    //- Logo
+    div(class="d-flex align-items-center justify-content-between")
+        a(href='/home', class="logo d-flex align-items-center")
+            img(src='/images/01_page_images/ddm_logo.png' alt='ddm logo')
+            span(class="d-none d-lg-block") DDM
+        i(class="bi bi-list toggle-sidebar-btn")
+    //- End Logo
+
+  
+    nav(class="header-nav ms-auto")
+        ul(class="d-flex align-items-center")
+
+            li(class="nav-item dropdown pe-3")
+                //- profile
+                a(href="#" data-bs-toggle='dropdown' class="nav-link nav-profile d-flex align-items-center pe-0")
+                    span(class="d-none d-md-block ps-2 prompt-thin")= `${user.fullname}`
+                //- profile end
+
+                ul(class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile")
+                    li(class="dropdown-header")
+                        h6(class="prompt-thin") DDM |
+                            span(class="prompt-thin")  v 1.0
+                    
+                    li()
+                        hr(class="dropdown-divider")
+                    li
+                        if user.status == "admin"
+                            a(href="/home/project/", class="dropdown-item d-flex align-items-center") 
+                                i(class="bx bx-list-ul")
+                                span(class="prompt-regular") Project                      
+                            a(href="", class="dropdown-item d-flex align-items-center") 
+                                i(class="ri-user-settings-fill")
+                                span(class="prompt-regular") จัดการสมาชิก
+                        a(href="/logout", class="dropdown-item d-flex align-items-center") 
+                            i(class="bi bi-box-arrow-right")
+                            span(class="prompt-regular") ออกจากระบบ
+
+
+                        
+

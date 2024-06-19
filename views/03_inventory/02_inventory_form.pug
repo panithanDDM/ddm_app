@@ -1,0 +1,98 @@
+extends ../layout
+
+block content
+    include ../utilities/03_navbar
+    include ../utilities/02_sidebar_operator
+
+    main(id="main" class="main")
+        div(class="pagetitle")
+            h1 Inventory Form |
+        
+        section(class="section dashboard")
+            div(class="row")
+                div(class="col-lg-9 mx-auto")
+                    div(class="card info-card")
+                        div(class="card-body")
+                            h4(class="card-title")
+                            if flash.error 
+                                p(class="flash-error")= flash.error
+
+                            //- Inventory Form
+                            form(action="/inventory/form/" method="POST" enctype="multipart/form-data" class="row needs-validation" novalidate) 
+
+                                div(class="row mt-4")
+                                    div(class="col-lg-6 col-sm-12 pt-sm-3")
+                                        label(for="name" Class="form-label") Equiment Name 
+                                        input(name="name" type="text" class="form-control" required)
+                                        div(class="invalid-feedback") 
+                                            p Please provide data Name of Equiement
+                                    div(class="col-lg-6 col-sm-12 pt-sm-3")
+                                        label(for="model" Class="form-label") Equiment Model
+                                        input(name="model" type="text" class="form-control" required)
+                                        div(class="invalid-feedback ")
+                                            p Please provide Equiment Model
+                                
+                                div(class="row mt-4")
+                                    div(class="col-lg-6 col-sm-12 pt-sm-3")
+                                        label(for="snumber" Class="form-label") Serial number
+                                        input(name="snumber" type="text" class="form-control" required)
+                                        div(class="invalid-feedback")
+                                            p Please provide Serial number
+                                    div(class="col-lg-6 col-sm-12 pt-sm-3")
+                                        label(for="type" Class="form-label") Type
+                                        select(name="type" class="form-select" aria-label="Default select example" required)   
+                                            option(value="Drone") Drone 
+                                            option(value="Battery") Battery
+                                            option(value="Sensor") Sensor
+                                            option(value="Camera") Camera
+                                            option(value="Charger") Charger
+                                            option(value="Accessory") Accessory
+                                            option(value="Other") Other
+                                
+                                div(class="row mt-4")
+                                    div(class="col-lg-6 col-sm-12 pt-sm-3")
+                                        label(for="status" Class="form-label") Status
+                                        select(name="status" class="form-select" aria-label="Default select example" required)   
+                                            option(value="Active") Active
+                                            option(value="Pending") Pending
+                                            option(value="Damaged") Damaged
+                                    div(class="col-lg-6 col-sm-12 pt-sm-3")
+                                        label(for="image" class="form-label") Image
+                                        input(name="image" type="file" class="form-control" capture="user" accept="image/*")
+                                        div(class="invalid-feedback ")
+                                            p Please provide Image
+
+                                div(class="row mt-4")
+                                    div(class="col-lg-6 col-sm-12 pt-sm-3")
+                                        label(for="usecycle" Class="form-label") Use Cycle
+                                        input(name="usecycle" type="number" class="form-control" value=0)
+                                            
+                                    div(class="col-lg-6 col-sm-12 pt-sm-3")
+                                        label(for="date" class="form-label") Date 
+                                        input(name="date" type="date" class="form-control" required)
+                                        div(class="invalid-feedback")
+                                            p Please provide Date
+                                
+                                div(class="row mt-4")
+                                    div(class="col-lg-12 col-sm-12 d-flex justify-content-center align-items-center pt-sm-5")
+                                        button(type='submit' Class="btn btn-primary mx-4") Save
+                                        button(type='reset' class="btn btn-secondary mx-4") Reset
+            //- Modal for Loading 
+            div(class="modal fade" id="loadingModal" tabindex="-1" aria-labelledby="loadingModalLabel" aria-hidden="true")  
+                div(class="modal-dialog modal-dialog-centered")
+                    div(class="modal-content")
+                        div(class="modal-header")
+                            h5(class="modal-title") Loading...
+                        div(class="modal-body")
+                            div(class="d-flex justify-content-center")
+                                div(class="spinner-border" role="status")
+                                    span(class="visually-hidden") Loading...
+
+    script.
+        function showLoadingModal() {
+            var form = document.querySelector('form');
+            if (form.checkValidity()) {
+                var loadingModal = new bootstrap.Modal(document.getElementById('loadingModal'));
+                loadingModal.show();
+            }
+        }

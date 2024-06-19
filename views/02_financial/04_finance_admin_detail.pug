@@ -1,0 +1,92 @@
+extends ../layout
+
+block content
+    include ../utilities/03_navbar
+    include ../utilities/02_sidebar_operator
+
+    main(id="main" class="main")
+        div(class="pagetitle")
+            h1= `Requester Name : "${detailFinance.name}"`
+            p= `Price : ${detailFinance.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} Bath`
+            -const day = detailFinance.date.getDate()
+            -const month = detailFinance.date.getMonth() + 1
+            -const year = detailFinance.date.getFullYear()
+            -const formattedMonth = String(month).padStart(2, '0')
+            -const formattedDay = String(day).padStart(2, '0')
+            -const formattedDate = `${year}-${formattedMonth}-${formattedDay}` 
+
+        section(class="section")
+            div(class="row")
+
+                div(class="col-xl-4")
+                    div(class="card")
+                        div(class="card-body d-flex flex-column align-items-center pt-3")
+                            - var badgeClass = '';
+                            - if (detailFinance.status === 'Accept') {
+                                - badgeClass = 'bg-success';
+                            - } else if (detailFinance.status === 'Pending') {
+                                - badgeClass = 'bg-warning';
+                            - } else if (detailFinance.status === 'Reject') {
+                                - badgeClass = 'bg-danger';
+                            - }
+                            div.col-lg-9.col-md-8.badge(class=badgeClass)= detailFinance.status
+
+                            div(class="col-12 pt-3")
+                                img(src=`/images/03_finance_upload/${detailFinance.image}` class="rounded-2 w-100" alt="finance_picture")
+
+
+                div(class="col-md-8 mx-auto")
+                    div(class="card")
+                        div(class="card-body")
+                            h5(class="card-title text-center") Finance Detail
+
+                            form(action=`/finance/admin/${detailFinance.id}` method="post" class="row g-3 needs-validation")
+                                div(class="col-md-12")
+                                    label(for="name" class="form-label") Name
+                                    input(name="name" type="text" class="form-control" value=`${detailFinance.name}` disabled) 
+                                div(class="col-md-6")
+                                    label(for="date" class="form-label") Date
+                                    input(name="date" type="date" class="form-control" id="dateInput" value=`${formattedDate}`  disabled required)
+                                div(class="col-md-6")
+                                    label(for="section" class="form-label") Section
+                                    select(name="section" class="form-select" aria-label="Default select example" disabled) 
+                                        option(value="แผนกการกเงิน" selected=detailFinance.section==="แผนกการกเงิน") แผนกการเงิน
+                                        option(value="แผนกเทคนิค" selected=detailFinance.section==="แผนกเทคนิค") แผนกเทคนิค
+                                        option(value="อื่นๆ" selected=detailFinance.section==="อื่นๆ") อื่นๆ
+                                div(class="col-md-6")
+                                    label(for="type" class="form-label") Type
+                                    select(name="type" class="form-control" aria-label="Default select example" disabled) 
+                                        option(value="เบิกเงินค่าดำเนินงาน" selected=detailFinance.type==="เบิกเงินค่าดำเนินงาน") เบิกเงินค่าดำเนินงาน
+                                        option(value="ค่าอุปกรณ์" selected=detailFinance.type==="ค่าอุปกรณ์") ค่าอุปกรณ์
+                                        option(value="เบิกเงินสวัสดิการออฟฟิศ" selected=detailFinance.type==="เบิกเงินสวัสดิการออฟฟิศ") เบิกเงินสวัสดิการออฟฟิศ
+                                        option(value="เบิกเงินค่าพัสดุ" selected=detailFinance.type==="เบิกเงินค่าพัสดุ") เบิกเงินค่าพัสดุ
+                                        option(value="ค่าเดินทาง" selected=detailFinance.type==="ค่าเดินทาง") ค่าเดินทาง
+                                        option(value="อื่นๆ" selected=detailFinance.type==="อื่นๆ") อื่นๆ
+                                div(class="col-md-6")
+                                    label(for="project_name" class="form-label") Project
+                                    input(name="name" type="text" class="form-control" value=`${detailFinance.project_name}` disabled)
+                                div(class="col-md-6")
+                                    label(for="price" class="form-label") Price
+                                    input(name="price" type="text" class="form-control" id="priceInput" value=`${detailFinance.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} Bath` required disabled)
+                                div(class="col-md-6")
+                                    label(for="section" class="form-label") Status
+                                    select(name="status" class="form-select" aria-label="Default select example") 
+                                        option(value="Pending" selected=detailFinance.status==="Pending") Pending
+                                        option(value="Accept" selected=detailFinance.status==="Accept") Accept
+                                        option(value="Reject" selected=detailFinance.status==="Reject") Reject
+                                div(class="col-md-12")
+                                    label(for="description" class="form-label") Description
+                                    textarea(name="description" class="form-control" required disabled)= detailFinance.description
+                                div(class="col-md-12")
+                                    div(class="col-lg-12 col-sm-12 d-flex justify-content-center align-items-center pt-sm-5")
+                                        button(type="button" class="btn btn-success mx-4" data-bs-toggle="modal" data-bs-target="#basicModal") Approv Request
+                                        button(type='reset' class="btn btn-secondary mx-4") Delete Request
+                                div(class="modal fade" id="basicModal" tabindex="-1")
+                                    div(class="modal-dialog")
+                                        div(class="modal-content")
+                                            div(class="modal-header")
+                                                h5(class="modal-title") Approval Confirmation
+                                                button(type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close")
+                                            div(class="modal-body")
+                                                button(type='submit' class="btn btn-success") Approv Request
+                                

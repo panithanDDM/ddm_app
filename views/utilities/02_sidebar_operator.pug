@@ -1,0 +1,135 @@
+//- ======= Sidebar =======
+aside(id="sidebar" class="sidebar")
+    ul(id="sidebar-nav" class="sidebar-nav")
+        li(class="nav-item")
+        a(href="/home" class="nav-link")
+            i(class="ri-home-2-line")
+            span Home
+
+    
+        
+        li(class="nav-heading") ISO-DOCUMENT
+        li(class="nav-item")
+        a(class="nav-link collapsed" data-bs-target='#forms-nav1' data-bs-toggle='collapse' href='#')
+            i(class="bi-cash-coin")
+            span(class="prompt-regular") Financial
+            i(class="bi bi-chevron-down ms-auto")
+        ul(id="forms-nav")
+        ul#forms-nav1.nav-content.collapse(data-bs-parent='#sidebar-nav')
+            li
+            a(href='/finance')
+                i.bi.bi-circle
+                span(class="prompt-light") Financial | F-OO-01
+            li
+            a(href='/finance/form')
+                i.bi.bi-circle
+                span(class="prompt-light") Financial Form | F-OO-01
+            li
+        
+
+        li(class="nav-item")
+        a(class="nav-link collapsed" data-bs-target='#forms-nav2' data-bs-toggle='collapse' href='#')
+            i(class="bi bi-cart")
+            span(class="prompt-regular") Inventory
+            i(class="bi bi-chevron-down ms-auto")
+        ul(id="forms-nav")
+        ul(id="forms-nav2" class="nav-content collapse" data-bs-parent='#sidebar-nav')
+            li
+            a(href='/inventory')
+                i.bi.bi-circle
+                span(class="prompt-light") Inventory List | F-OO-00
+            li
+            a(href='/inventory/form')
+                i.bi.bi-circle
+                span(class="prompt-light") Inventory Form | F-OO-00
+            li
+            a(href='#')
+                i.bi.bi-circle
+                span(class="prompt-light") Damage | F-OO-00
+            li
+
+
+        li(class="nav-item")
+        a(class="nav-link collapsed" data-bs-target='#forms-nav3' data-bs-toggle='collapse' href='#')
+            i(class="ri-map-pin-line")
+            span(class="prompt-regular") Survey
+            i(class="bi bi-chevron-down ms-auto")
+        ul(id="forms-nav")
+        ul#forms-nav3.nav-content.collapse(data-bs-parent='#sidebar-nav')
+            li
+            a(href='/survey/')
+                i.bi.bi-circle
+                span(class="prompt-light") Survey | F-OO-00
+            li
+            a(href='/survey/form')
+                i.bi.bi-circle
+                span(class="prompt-light") Survey Form | F-OO-00
+        
+
+
+        //- li(class="nav-item")
+        //- a(class="nav-link collapsed" data-bs-target='#forms-nav4' data-bs-toggle='collapse' href='#')
+        //-     i(class="bi bi-journal-text")
+        //-     span(class="prompt-regular") การดูแลรักษาที่ดิน
+        //-     i(class="bi bi-chevron-down ms-auto")
+        //- ul(id="forms-nav")
+        //- ul#forms-nav4.nav-content.collapse(data-bs-parent='#sidebar-nav')
+        //-     li
+        //-     a(href='/inventory/form/')
+        //-         i.bi.bi-circle
+        //-         span(class="prompt-light") การปฏิบัติงานกรมที่ดิน
+        //-     li
+        //-     a(href='#')
+        //-         i.bi.bi-circle
+        //-         span(class="prompt-light") การปฏิบัติงานกรมธนารักษ์
+        //-     li
+        //-     a(href='#')
+        //-         i.bi.bi-circle
+        //-         span(class="prompt-light") การปฏิบัติงานกระทรวงมหาดไทย
+        //-     li
+        //-     a(href='#')
+        //-         i.bi.bi-circle
+        //-         span(class="prompt-light") การปฏิบัติงานกรมป่าไม้
+        //-     li
+        //-     a(href='#')
+        //-         i.bi.bi-circle
+        //-         span(class="prompt-light") การปฏิบัติงานกรมอุทยาน
+        //-     li
+        //-     a(href='#')
+        //-         i.bi.bi-circle
+        //-         span(class="prompt-light") การปฏิบัติงานสำนักงานทรัพท์สินส่วนพระมหากษัติย์
+        
+
+
+        //- li(class="nav-heading prompt-light") รายงานการบุกรุกที่ดิน
+        //- li(class="nav-item")
+        //- a(class="nav-link collapsed" data-bs-target='#forms-nav5' data-bs-toggle='collapse' href='#')
+        //-     i(class="bi bi-journal-text")
+        //-     span(class="prompt-regular") รายงานการบุกรุกที่ดิน
+        //-     i(class="bi bi-chevron-down ms-auto")
+        //- ul(id="forms-nav")
+        //- ul#forms-nav5.nav-content.collapse(data-bs-parent='#sidebar-nav')
+        //-     li
+        //-     a(href='/survey/form/')
+        //-         i.bi.bi-circle
+        //-         span(class="prompt-light") ฟอร์มบันทึกการบุกรุกที่ดิน
+        //-     li
+        //-     a(href='/survey/map/')
+        //-         i.bi.bi-circle
+        //-         span(class="prompt-light") ตำแหน่งการบุกรุกที่ดิน
+        //-     li
+        //-     a(href='#')
+        //-         i.bi.bi-circle
+        //-         span(class="prompt-light") เอกสารรายงานตามวงรอบ
+
+
+
+
+        //- li(class="nav-heading prompt-light") กฏหมาย เอกสารอ้างอิง
+        //- li(class="nav-item")
+        //- a(class="nav-link collapsed" href="#")
+        //-     i(class="bi bi-box-arrow-in-right")
+        //-     span(class="prompt-regular") กฏหมาย เอกสารอ้างอิง
+
+        
+

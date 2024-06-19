@@ -1,0 +1,89 @@
+extends ../layout
+
+block content
+    include ../utilities/03_navbar
+    include ../utilities/02_sidebar_operator
+
+
+    main(id="main" class="main")
+        section(class="section dashboard")
+            if user.status == "admin"
+                div(class="row")
+                    div(class="col-md-4 col-sm-12")
+                        a(href="/finance/admin" ) 
+                            div(class="card info-card customers-card")
+                                div(class="card-body")
+                                    h5(class="card-title") ISO | 
+                                        span F-OO-00
+                                    div(class="d-flex align-items-center elemet")
+                                        div(class="card-icon rounded-circle d-flex align-items-center justify-content-center")
+                                            i(class="bi-cash-coin")
+                                        div(class="ps-4")
+                                            h4 Financial Admin
+                hr
+                    
+            div(class="row")
+                div(class="col-md-4 col-sm-12")
+                    a(href="/finance" ) 
+                        div(class="card info-card revenue-card")
+                            div(class="card-body")
+                                h5(class="card-title") ISO | 
+                                    span F-OO-00
+                                div(class="d-flex align-items-center elemet")
+                                    div(class="card-icon rounded-circle d-flex align-items-center justify-content-center")
+                                        i(class="bi-cash-coin")
+                                    div(class="ps-4")
+                                        h4 Financial
+                
+                div(class="col-md-4 col-sm-12")
+                    a(href="/inventory" ) 
+                        div(class="card info-card revenue-card")
+                            div(class="card-body")
+                                h5(class="card-title") ISO | 
+                                    span F-OO-00
+                                div(class="d-flex align-items-center elemet")
+                                    div(class="card-icon rounded-circle d-flex align-items-center justify-content-center")
+                                        i(class="bi bi-cart")
+                                    div(class="ps-4")
+                                        h4 Inventory
+                
+                div(class="col-md-4 col-sm-12")
+                    a(href="/survey" ) 
+                        div(class="card info-card revenue-card")
+                            div(class="card-body")
+                                h5(class="card-title") ISO | 
+                                    span F-OO-00
+                                div(class="d-flex align-items-center elemet")
+                                    div(class="card-icon rounded-circle d-flex align-items-center justify-content-center")
+                                        i(class="ri-map-pin-line")
+                                    div(class="ps-4")
+                                        h4 Survey
+        
+            //- Columns 2 
+            div(class="row")
+                div(class="col-md-4 col-sm-12")
+                    a(href="" ) 
+                        div(class="card info-card revenue-card")
+                            div(class="card-body")
+                                h5(class="card-title") ISO | 
+                                    span F-OO-00
+                                div(class="d-flex align-items-center elemet")
+                                    div(class="card-icon rounded-circle d-flex align-items-center justify-content-center")
+                                        i(class="ri-map-pin-line")
+                                    div(class="ps-4")
+                                        h4 Working Time
+
+
+                //- div(class="col-lg-3 col-sm-10")#test
+                //-     .card.info-card.revenue-card
+                //-         .card-body
+                //-             h5.card-title
+                //-                 | Revenue 
+                //-                 span | This Month
+                //-             .d-flex.align-items-center
+                //-                 .card-icon.rounded-circle.d-flex.align-items-center.justify-content-center
+                //-                     i.bi.bi-currency-dollar
+                //-                 .ps-2
+                //-                     h6 Financail
+
+    

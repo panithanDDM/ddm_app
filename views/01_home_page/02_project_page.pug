@@ -1,0 +1,93 @@
+extends ../layout
+
+block content
+    include ../utilities/03_navbar
+    include ../utilities/02_sidebar_operator
+
+
+    main(id="main" class="main")
+        div(class="pagetitle")
+            h1 Project detail
+        
+        section(class="section dashboard")
+            div(class="row")
+                div(class="col-lg-9 mx-auto")
+                    div(class="card")
+                        div(class="card-body")
+                            h4(class="card-title")
+                            if flash.error
+                                p(class="flash-error")= flash.error
+
+
+                            if detailProject 
+                                //- For project Form Up date
+                                form(action=`/home/project/${detailProject.id}` method="post" class="row needs-validation" novalidate) 
+                                    div(class="col-md-8")
+                                        label(for="project_name" class="form-label") Project Name 
+                                        input(type="text" name="project_name" class="form-control" value=`${detailProject.project_name}` disabled)
+                                        div(class="invalid-feedback ")
+                                            p Please provide Project name
+                                    div(class="col-md-4")
+                                        label(for="project_status" class="form-label") Project status
+                                        select(name="project_status" class="form-select" aria-label="Default select example")
+                                            option(value="Ongoing" selected=detailProject.project_status==="Ongoing") Ongoing
+                                            option(value="Pending" selected=detailProject.project_status==="Pending") Pending
+                                            option(value="Success" selected=detailProject.project_status==="Success") Success
+                                    div(class="col-md-8 mx-auto mt-4")
+                                        div(class="col-lg-12 col-sm-12 d-flex justify-content-center align-items-center")
+                                            button(type='submit' Class="btn btn-primary mx-5") Save
+                                            button(type='reset' class="btn btn-secondary mx-5") Reset
+                            else 
+                                p
+                                //- For project Form input
+                                form(action="/home/project/" method="post" class="row needs-validation" novalidate) 
+                                    div(class="col-md-8")
+                                        label(for="project_name" class="form-label") Project Name 
+                                        input(type="text" name="project_name" class="form-control" required)
+                                        div(class="invalid-feedback ")
+                                            p Please provide Project name
+                                    div(class="col-md-4")
+                                        label(for="project_status" class="form-label") Project status
+                                        select(name="project_status" class="form-select" aria-label="Default select example")
+                                            option(value="Ongoing") Ongoing
+                                            option(value="Pending") Pending
+                                            option(value="Success") Success
+                                    div(class="col-md-8 mx-auto mt-4")
+                                        div(class="col-lg-12 col-sm-12 d-flex justify-content-center align-items-center")
+                                            button(type='submit' Class="btn btn-primary mx-5") Save
+                                            button(type='reset' class="btn btn-secondary mx-5") Reset
+                            
+            
+            hr(class="hr")
+
+            div(class="row")
+                div(class="col-md-12 mx-auto")
+                    div(class="card overflow-auto")
+                        div(class="card-body")
+                            h5(class="card-title") Project detail
+                        table(class="table table-borderless datatable")
+                            thead
+                                tr 
+                                    th(scope="col" class="prompt-regular") ID 
+                                    th(scope="col" class="prompt-regular") Project name
+                                    th(scope="col" class="prompt-regular") Project Status
+                            tbody
+                                each data, index in project 
+                                    - var badgeClass = '';
+                                    - if (data.project_status === 'Success') {
+                                        - badgeClass = 'bg-success';
+                                    - } else if (data.project_status === 'Pending') {
+                                        - badgeClass = 'bg-warning';
+                                    - } else if (data.project_status === 'Ongoing') {
+                                        - badgeClass = 'bg-danger';
+                                    - }
+                                    tr 
+                                        td= index + 1
+                                        td 
+                                            a(href=`/home/project/${data.id}`)= data.project_name
+                                        td
+                                            span.badge.text-center(class=badgeClass)= data.project_status
+
+
+
+    

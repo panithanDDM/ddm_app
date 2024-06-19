@@ -1,0 +1,171 @@
+extends ../layout
+
+block content
+    include ../utilities/03_navbar
+    include ../utilities/02_sidebar_operator
+
+    main(id="main" class="main")
+        div(class="pagetitle")
+            h1 Financial |
+
+        section(class="section dashboard")
+            div(class="row pt-4")
+                //- left side columns
+                div(class="col-lg-8")
+                    div(class="row")
+
+                        //- All Equioment Card 
+                        div(class="col-lg-4 col-12")
+                            div(class="card info-card sales-card")
+                                div(class="card-body")
+                                    h5(class="card-title") Totla | 
+                                        span 
+                                    div(class="d-flex align-items-center")
+                                        div(class="card-icon rounded-circle d-flex align-items-center justify-content-center")
+                                            i(class="bi-cash-coin")
+                                        div(class="ps-3")
+                                            h4(class="prompt-regular")= totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                        //- Active Equipment
+                        div(class="col-lg-4 col-12")
+                             div(class="card info-card revenue-card")
+                                div(class="card-body")
+                                    h5(class="card-title") Accept | 
+                                    div(class="d-flex align-items-center")
+                                        div(class="card-icon rounded-circle d-flex align-items-center justify-content-center")
+                                            i(class="bi-cash-coin")
+                                        div(class="ps-3")
+                                            h4(class="prompt-regular")= acceptPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                        //- Damage Equipment
+                        div(class="col-lg-4 col-12")
+                             div(class="card info-card customers-card")
+                                div(class="card-body")
+                                    h5(class="card-title") Reject | 
+                                    div(class="d-flex align-items-center")
+                                        div(class="card-icon rounded-circle d-flex align-items-center justify-content-center")
+                                            i(class="bi-cash-coin")
+                                        div(class="ps-3")
+                                            h4(class="prompt-regular")= rejectPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                    
+                    //- Table Data for Show All
+                    div(class="row")
+                        div(class="col-12")
+                            div(class="card recent-sales overflow-auto")
+                                div(class="card-body")
+                                    h5(class="card-title") Financial
+                                        span | Data Table 
+                                table(class="table table-borderless datatable")
+                                    thead 
+                                        tr 
+                                            th(scope='col' class="prompt-regular") Status
+                                            th(scope='col' class="prompt-regular") Type
+                                            th(scope='col' class="prompt-regular") Project
+                                            th(scope='col' class="prompt-regular") Price
+                                            th(scope='col' class="prompt-regular text-center") Delete
+                                    tbody
+                                        each item, index in financeData
+                                            - var badgeClass = '';
+                                            - if (item.status === 'Accept') {
+                                                - badgeClass = 'bg-success';
+                                            - } else if (item.status === 'Pending') {
+                                                - badgeClass = 'bg-warning';
+                                            - } else if (item.status === 'Reject') {
+                                                - badgeClass = 'bg-danger';
+                                            - }
+                                            tr 
+                                                th(scope='row')
+                                                    span.badge(class=badgeClass)= item.status
+                                                td(scope='row' class="prompt-regular")= item.type
+                                                td(scope='row' class="prompt-regular")= item.project_name
+                                                td(scope='row' class="prompt-regular")= item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                                                td(scope='row' class="prompt-regular text-center") 
+                                                    form(action=`/finance/${item.id}/delete` method="post")
+                                                        button(type="button" class="btn btn-danger btn-sm mx-4" data-bs-toggle="modal" data-bs-target="#basicModal") Delete
+                                                        div(class="modal fade" id="basicModal" tabindex="-1")
+                                                            div(class="modal-dialog")
+                                                                div(class="modal-content")
+                                                                    div(class="modal-header")
+                                                                        h5(class="modal-title") Delete Confirmation
+                                                                        button(type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close")
+                                                                    div(class="modal-body")
+                                                                        button(type='submit' class="btn btn-danger") Delete finance data
+                //- right side columns
+                div(class="col-lg-4")
+                    div(class="row")
+                        div(class="col-12")
+                            a(href="/finance/form") 
+                                div(class="d-grid gap-2 mt-3")
+                                    button(class="btn btn-outline-primary " type="button") 
+                                        i(class="bi-cash-coin")   + Add Financial
+                        
+                    
+                    //- Chart for show inventory status
+                    div(class="row mt-4")
+                        div(class="col-12")
+                            div(class="card")
+                                div(class="card-body pb-0")
+                                    h5(class="card-title") Approve Status 
+                                    div(id="trafficChart" class="echart" style='min-height: 400px;')
+                                    script.
+                                        document.addEventListener("DOMContentLoaded", () => {
+                                        const acceptPrice = #{acceptPrice}
+                                        const rejectPrice = #{rejectPrice}
+                                        const pendingPrice = #{pendingPrice}
+
+                                        echarts.init(document.querySelector("#trafficChart")).setOption({
+                                            tooltip: {
+                                                trigger: 'item'
+                                            },
+                                            legend: {
+                                                top: '5%',
+                                                left: 'center'
+                                            },
+                                            series: [{
+                                                name: 'Price',
+                                                type: 'pie',
+                                                radius: ['40%', '70%'],
+                                                avoidLabelOverlap: false,
+                                                label: {
+                                                    show: false,
+                                                    position: 'center'
+                                                },
+                                                emphasis: {
+                                                    label: {
+                                                        show: true,
+                                                        fontSize: '18',
+                                                        fontWeight: 'bold'
+                                                    }
+                                                },
+                                                labelLine: {
+                                                    show: false
+                                                },
+                                                data: [
+                                                    {
+                                                        value: acceptPrice,
+                                                        name: 'Accept',
+                                                        itemStyle:{
+                                                            color:'#55a630'
+                                                        }
+                                                    },
+                                                    {
+                                                        value: rejectPrice,
+                                                        name: 'Reject',
+                                                        itemStyle:{
+                                                            color:'#e74c3c'
+                                                        }
+                                                    },
+                                                    {
+                                                        value: pendingPrice,
+                                                        name: 'Pending',
+                                                        itemStyle: {
+                                                            color: '#f39c12' // เปลี่ยนสีของข้อมูล Pending ได้ที่นี่
+                                                        }
+                                                    }
+                                                ]
+                                            }]
+                                        });
+                                        });
+                //- Chart for show inventory status
+    script.
+
+                    
+                                        

@@ -1,0 +1,240 @@
+extends ../layout
+
+block content
+    include ../utilities/03_navbar
+    include ../utilities/02_sidebar_operator
+
+    main(id="main" class="main")
+        div(class="pagetitle")
+            h1= `Drone operation`
+            p(class="prompt-regular")= `Project :  ${detailSurvey.project_name}`
+
+        section(class="section profile")
+            div(class="row")
+
+                div(class="col-xl-4")
+                    div(class="card")
+                        div(class="card-body")
+                            h5(class="card-title") Location
+                            div(class="map" id="map")
+                            div(class="col-12 pt-3")
+                                img(src=`/images/04_survey_upload/${detailSurvey.image}` class="rounded-2 w-100" alt="survey_picture")
+
+
+                div(class="col-xl-8")
+                    div(class="card")
+                        div(class="card-body")
+                            h5(class="card-title text-center") Operation Checklist 
+                                span | F-OP-03
+                            
+                            form(action=`/survey/${detailSurvey.id}/delete` method="POST" class="row g-3") 
+                                div(class="col-md-6")
+                                    label(class="form-label") Pilot Name
+                                    input(type="text" class="form-control" value=`${detailSurvey.pilot_name}` disabled)
+                                div(class="col-md-6")
+                                    label(class="form-label") CO-Pilot Name
+                                    input(type="text" class="form-control" value=`${detailSurvey.copilot_name}` disabled)
+                                div(class="col-md-6")
+                                    label(class="form-label") Drone name
+                                    input(type="text" class="form-control" value=`${detailSurvey.drone_name}` disabled)
+                                div(class="col-md-6")
+                                    label(class="form-label") Project Name
+                                    input(type="text" class="form-control" value=`${detailSurvey.project_name}` disabled)
+                                div(class="col-md-6")
+                                    label(class="form-label") Cloud cover
+                                    input(type="text" class="form-control" value=`${detailSurvey.cloud_cover} %` disabled)
+                                div(class="col-md-6")
+                                    label(class="form-label") Temperature
+                                    input(type="text" class="form-control" value=`${detailSurvey.temperature} °C` disabled)
+                                div(class="col-md-6")
+                                    label(class="form-label") Wind speed
+                                    input(type="text" class="form-control" value=`${detailSurvey.wind_speed} m/s` disabled)
+                                div(class="col-md-6")
+                                    label(class="form-label") Wind direction
+                                    input(type="text" class="form-control" value=`${detailSurvey.wind_direction} °` disabled)
+                                div(class="col-md-12")
+                                    table(class="table table-sm")
+                                        thead
+                                            tr 
+                                                th(scope="col") 
+                                                th(scope="col") 
+                                        tbody
+                                            tr                                                        
+                                                td(class="prompt-regular" colspan="2") รายละเอียดพื้นที่
+                                            tr 
+                                                td
+                                                    input(class="form-check-input" type="checkbox" checked disabled)
+                                                td(class="prompt-light") ห่างไกลสนามบิน
+                                            tr 
+                                                td
+                                                    input(class="form-check-input" type="checkbox" checked disabled)                                                        
+                                                td(class="prompt-light") ปลอดภัยจากฝูงชน สัตว์ และทรัพย์สิน
+                                            tr 
+                                                td
+                                                    input(class="form-check-input" type="checkbox" checked disabled)                                                        
+                                                td(class="prompt-light") ปราศจากสิ่งกีดขวางเหนือศรีษะ เช่น อาคาร ต้นไม้  เสาไฟฟ้า
+                                            tr 
+                                                td
+                                                    input(class="form-check-input" type="checkbox" checked disabled)                                                        
+                                                td(class="prompt-light") มีระบุสถานที่ขึ้นและลงที่ชัดเจน
+                                            tr 
+                                                td
+                                                    input(class="form-check-input" type="checkbox" checked disabled)                                                        
+                                                td(class="prompt-light") มีพื้นที่ลงจอดสำรอง
+                                            tr                                                        
+                                                td(class="prompt-regular" colspan="2") การขึ้นบิน - การลงจอด
+                                            tr 
+                                                td
+                                                    input(class="form-check-input" type="checkbox" checked disabled)                                                        
+                                                td(class="prompt-light") ตรวจสอบจำนวนดาวเทียมและสัญญาณดาวเทียม
+                                            tr 
+                                                td
+                                                    input(class="form-check-input" type="checkbox" checked disabled)                                                        
+                                                td(class="prompt-light") ปรับเทียบเข็มทิศ
+                                            tr 
+                                                td
+                                                    input(class="form-check-input" type="checkbox" checked disabled)                                                        
+                                                td(class="prompt-light") ตรวจสอบฟิร์มแวร์เครื่องส่งสัญญาณเรียบร้อย
+                                            tr 
+                                                td
+                                                    input(class="form-check-input" type="checkbox" checked disabled)                                                        
+                                                td(class="prompt-light") ตรวจสอบเฟิร์มแวร์ของ Drone เรียบร้อย
+                                            tr 
+                                                td
+                                                    input(class="form-check-input" type="checkbox" checked disabled)                                                        
+                                                td(class="prompt-light") หน่วยความจำมีพื้นที่หน่วยความจำมากกว่า 10 GB
+                                            tr 
+                                                td
+                                                    input(class="form-check-input" type="checkbox" checked disabled)                                                        
+                                                td(class="prompt-light") เปิดเครื่อง Drone และ Remote control
+                                            tr 
+                                                td
+                                                    input(class="form-check-input" type="checkbox" checked disabled)                                                        
+                                                td(class="prompt-light") ปิดเครื่อง Drone และ Remote control (หลังการบิน)
+                                            tr 
+                                                td
+                                                    input(class="form-check-input" type="checkbox" checked disabled)                                                        
+                                                td(class="prompt-light") ถอดแบตเตอรี่ออกจากเครื่อง (หลังการบิน)
+                                            tr                                                        
+                                                td(class="prompt-regular" colspan="2") การตรวจเช็คความพร้อมและสภาพอุปกรณ์
+                                            tr 
+                                                td
+                                                    input(class="form-check-input" type="checkbox" checked disabled)                                                        
+                                                td(class="prompt-light") Gimbal Lock และฝาครอบเลนส์ถูกถอดออกเรียบร้อย
+                                            tr 
+                                                td
+                                                    input(class="form-check-input" type="checkbox" checked disabled)                                                        
+                                                td(class="prompt-light") Gimbal Lock และฝาครอบเลนส์ถูกปิดเรียบร้อย (หลังบิน)
+                                            tr 
+                                                td
+                                                    input(class="form-check-input" type="checkbox" checked disabled)                                                        
+                                                td(class="prompt-light") มีการตรวจสอบสัญญาณและเครื่องส่งสัญญาณ
+                                            tr 
+                                                td
+                                                    input(class="form-check-input" type="checkbox" checked disabled)                                                        
+                                                td(class="prompt-light") มีการตรวจสอบหารอยร้าว ชิ้นส่วนหลวมเรียบร้อย
+                                            tr 
+                                                td
+                                                    input(class="form-check-input" type="checkbox" checked disabled)                                                        
+                                                td(class="prompt-light") มอเตอร์หมุนได้อย่างอิสระ
+                                            tr 
+                                                td
+                                                    input(class="form-check-input" type="checkbox" checked disabled)                                                        
+                                                td(class="prompt-light") ใบพัดและตัวยึดไม่มีรอยร้าวหรือความเสียหาย
+                                            tr 
+                                                td
+                                                    input(class="form-check-input" type="checkbox" checked disabled)                                                        
+                                                td(class="prompt-light") ทำการชาร์จแบตเตอรี่เต็ม 100 % (ก่อนบิน)
+                                            tr 
+                                                td
+                                                    input(class="form-check-input" type="checkbox" checked disabled)                                                        
+                                                td(class="prompt-light") ใส่แบตเตอรี่อย่างถูกต้อง (ก่อนบิน)
+                                            tr 
+                                                td
+                                                    input(class="form-check-input" type="checkbox" checked disabled)                                                        
+                                                td(class="prompt-light") ทำการชาร์จแบตเตอรี่เต็ม 100 % (ก่อนบิน)
+                                            tr 
+                                                td
+                                                    input(class="form-check-input" type="checkbox" checked disabled)                                                        
+                                                td(class="prompt-light") แบตเตอรี่คอนโทรลเลอร์มากกว่า 30 %
+                                            tr                                                        
+                                                td(class="prompt-regular" colspan="2") เอกสารที่เกี่ยวข้อง
+                                            tr 
+                                                td
+                                                    input(class="form-check-input" type="checkbox" checked disabled)                                                        
+                                                td(class="prompt-light") หนังสืออนุญาตบินในพื้นที่
+                                            tr 
+                                                td
+                                                    input(class="form-check-input" type="checkbox" checked disabled)                                                        
+                                                td(class="prompt-light") ใบอนุญาตนักบิน
+                                            tr                                                        
+                                                td(class="prompt-regular" colspan="2") การแต่งที่ปลอดภัยในภาคสนาม
+                                            tr 
+                                                td
+                                                    input(class="form-check-input" type="checkbox" checked disabled)                                                        
+                                                td(class="prompt-light") เสื้อสะท้อนแสง
+                                            tr 
+                                                td
+                                                    input(class="form-check-input" type="checkbox" checked disabled)                                                        
+                                                td(class="prompt-light") หมวกเซฟตี้
+                                            tr 
+                                                td
+                                                    input(class="form-check-input" type="checkbox" checked disabled)                                                        
+                                                td(class="prompt-light") แว่นกันสะเก็ด หรือ แว่นกันแดด
+                                            tr 
+                                                td
+                                                    input(class="form-check-input" type="checkbox" checked disabled)                                                        
+                                                td(class="prompt-light") รองเท้าเซฟตี้
+                                            tr                                                        
+                                                td(class="prompt-regular" colspan="2") ตรวจสอบข้อมูลภาพ (Raw data) หลังบินสำรวจ
+                                            tr 
+                                                td
+                                                    input(class="form-check-input" type="checkbox" checked disabled)                                                        
+                                                td(class="prompt-light") ความคมชัดของภาพ
+                                            tr 
+                                                td
+                                                    input(class="form-check-input" type="checkbox" checked disabled)                                                        
+                                                td(class="prompt-light") ความครบถ้วนของภาพ
+                                            tr 
+                                                td
+                                                    input(class="form-check-input" type="checkbox" checked disabled)                                                        
+                                                td(class="prompt-light") ครอบคุมขอบเขตพื้นที่สำรวจดังแผนการสำรวจ
+                                            tr 
+                                                td
+                                                    input(class="form-check-input" type="checkbox" checked disabled)                                                        
+                                                td(class="prompt-light") ตรวจสอบค่าความ error ใน Pix4D เบื้องต้น
+                                            tr 
+                                                td
+                                                    input(class="form-check-input" type="checkbox" checked disabled)                                                        
+                                                td(class="prompt-light") Black up ข้อมูลรูปภาพ
+                                div(class="col-md-12")
+                                    div(class="col-lg-12 col-sm-12 d-flex justify-content-center align-items-center")
+                                        button(type="button" class="btn btn-danger mx-4" data-bs-toggle="modal" data-bs-target="#basicModal") Delete
+                                div(class="modal fade" id="basicModal" tabindex="-1")
+                                    div(class="modal-dialog")
+                                        div(class="modal-content")
+                                            div(class="modal-header")
+                                                h5(class="modal-title") Delete Confirmation
+                                                button(type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close")
+                                            div(class="modal-body")
+                                                button(type='submit' class="btn btn-danger") Delete operation data
+                                        
+
+
+    script.
+        var detailSurvey = !{JSON.stringify(detailSurvey)};
+        console.log(detailSurvey)
+        var latitude = detailSurvey.latitude
+        var longitude = detailSurvey.longitude
+        var map = L.map('map', {
+            center: [latitude, longitude],
+            zoom: 13,
+            zoomControl: false // เอาปุ่ม zoom ออก
+        });
+        var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+        }).addTo(map);
+
+        var circle = L.circleMarker([latitude, longitude], { radius: 5, weight: 3 }).addTo(map);
+
+        
